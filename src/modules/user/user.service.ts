@@ -7,19 +7,19 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserEntity) private repo: Repository<UserEntity>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
   ) {}
 
-  create(request: RegisterUserDto) {
-    const user = this.repo.create(request);
-    return this.repo.save(user);
+  async create(request: RegisterUserDto) {
+    const newUser = this.userRepository.create(request);
+    return await this.userRepository.save(newUser);
   }
 
-  findByEmail(email: string) {
-    return this.repo.findOne({ where: { email } });
-  }
-
-  findById(id: string) {
-    return this.repo.findOne({ where: { id } });
+  async findByEmail(email: string) {
+    return await this.userRepository.findOne({
+      where: { email },
+      select: { id: true },
+    });
   }
 }
