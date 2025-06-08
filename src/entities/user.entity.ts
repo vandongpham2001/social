@@ -27,8 +27,8 @@ export class UserEntity extends BaseIdEntity {
   @Column({ type: 'varchar', length: 100 })
   last_name: string;
 
-  @Column({ type: 'varchar', length: 100 })
-  dob: string;
+  @Column()
+  dob: Date;
 
   @Column({ type: 'text', nullable: true })
   bio: string;
