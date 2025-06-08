@@ -48,9 +48,6 @@ export const dataSourceOption: DataSourceOptions = {
   ],
   synchronize: false,
   migrations: ['src/database/migrations/*-migration.ts'],
-  //   autoLoadEntities: true,
-  //   migrationsRun: false,
-  //   logging: true,
 };
 
 const AppDataSource = new DataSource(dataSourceOption);
