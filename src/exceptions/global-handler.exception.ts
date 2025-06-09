@@ -6,6 +6,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { QueryFailedError } from 'typeorm';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -14,21 +15,28 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    const status =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+    const isHttp = exception instanceof HttpException;
+    const isQueryError = exception instanceof QueryFailedError;
 
-    const exceptionResponse =
-      exception instanceof HttpException
-        ? exception.getResponse()
-        : { message: 'INTERNAL SERVER ERROR' };
+    const status = isHttp
+      ? exception.getStatus()
+      : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    response.status(status).json({
+    const exceptionResponse = isHttp
+      ? exception.getResponse()
+      : isQueryError
+        ? { message: 'Database error: ' + (exception as any).message }
+        : exception instanceof Error
+          ? { message: exception.message }
+          : { message: 'Internal server error' };
+
+    const errorResponse = {
       ...(typeof exceptionResponse === 'string'
         ? { message: exceptionResponse }
         : exceptionResponse),
       path: request.url,
-    });
+    };
+
+    response.status(status).json(errorResponse);
   }
 }

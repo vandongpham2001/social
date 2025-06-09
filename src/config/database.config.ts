@@ -47,7 +47,7 @@ export const dataSourceOption: DataSourceOptions = {
     UserEntity,
   ],
   synchronize: false,
-  migrations: ['src/database/migrations/*-migration.ts'],
+  migrations: [__dirname + '/../database/migrations/*-migration.{ts,js}'],
 };
 
 const AppDataSource = new DataSource(dataSourceOption);

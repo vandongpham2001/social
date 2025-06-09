@@ -9,6 +9,7 @@ import { ConversationMemberEntity } from './conversation-member.entity';
 import { MessageEntity } from './message.entity';
 import { MessageStatusEntity } from './message-status.entity';
 import { CommentLikeEntity } from './comment-like.entity';
+import { Gender } from 'src/enum/gender.enum';
 
 @Entity('users')
 export class UserEntity extends BaseIdEntity {
@@ -29,6 +30,9 @@ export class UserEntity extends BaseIdEntity {
 
   @Column()
   dob: Date;
+
+  @Column({ type: 'enum', enum: Gender })
+  gender: Gender;
 
   @Column({ type: 'text', nullable: true })
   bio: string;
