@@ -7,5 +7,5 @@ export class InvalidatedTokenEntity extends BaseEntity {
   id: string;
 
   @Column({ type: 'timestamp' })
-  expiryTime: Date;
+  expiry_time: Date;
 }

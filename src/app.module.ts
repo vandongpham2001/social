@@ -4,18 +4,24 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOption } from './config/database.config';
 import { APP_FILTER } from '@nestjs/core';
 import { GlobalExceptionFilter } from './exceptions/global-handler.exception';
-import { AuthService } from './modules/auth/auth.service';
 import { AuthModule } from './modules/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOption), UserModule, AuthModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRoot(dataSourceOption),
+    UserModule,
+    AuthModule,
+  ],
   controllers: [],
   providers: [
     {
       provide: APP_FILTER,
       useClass: GlobalExceptionFilter,
     },
-    AuthService,
   ],
 })
 export class AppModule {}

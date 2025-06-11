@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { UserEntity } from 'src/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { v4 as uuidv4 } from 'uuid';
+import { Constant } from 'src/constants/constant';
 
 @Injectable()
 export class AuthService {
@@ -26,11 +27,17 @@ export class AuthService {
     }
 
     const accessToken = this.generateToken(user);
+
+    return {
+      accessToken,
+    }
   }
 
   private generateToken(user: UserEntity) {
     const now = Math.floor(Date.now() / 1000);
-    const expireIn = parseInt(process.env.JWT_EXPIRE_IN || '86400');
+    const expireIn = parseInt(
+      process.env.JWT_EXPIRE_IN || Constant.JWT.DEFAULT.EXPIRE_IN,
+    );
 
     const payload = {
       id: user.id,
