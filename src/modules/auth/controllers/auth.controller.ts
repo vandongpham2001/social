@@ -1,15 +1,16 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { RegisterUserDto } from 'src/dtos/request/auth/register-user.dto';
-import { UserService } from '../user/user.service';
+import { UserService } from '../../user/services/user.service';
 import { LoginDto } from 'src/dtos/request/auth/login.dto';
-import { AuthService } from './auth.service';
+import { AuthService } from '../services/auth.service';
+
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private userService: UserService,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   @Post('register')
   async register(@Body() request: RegisterUserDto) {

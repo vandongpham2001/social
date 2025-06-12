@@ -1,5 +1,5 @@
 import { Body, Controller, Put } from '@nestjs/common';
-import { UserService } from './user.service';
+import { UserService } from '../services/user.service';
 import { UpdateUserDto } from 'src/dtos/request/user/update-user.dto';
 
 @Controller('users')

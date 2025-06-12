@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from '../user/user.service';
 import { LoginDto } from 'src/dtos/request/auth/login.dto';
 import { UnauthorizedException } from 'src/exceptions/unauthorized.exception';
 import * as bcrypt from 'bcrypt';
@@ -7,13 +6,14 @@ import { UserEntity } from 'src/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { v4 as uuidv4 } from 'uuid';
 import { Constant } from 'src/constants/constant';
+import { UserService } from 'src/modules/user/services/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async login(request: LoginDto) {
     const user = await this.userService.findByEmail(request.email);
