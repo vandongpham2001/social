@@ -12,11 +12,17 @@ import { ConversationEntity } from './conversation.entity';
 
 @Entity('conversation_members')
 export class ConversationMemberEntity extends BaseEntity {
-  @PrimaryColumn('uuid')
-  conversation_id: string;
+  @PrimaryColumn({ name: 'conversation_id', type: 'uuid' })
+  conversationId: string;
 
-  @PrimaryColumn('uuid')
-  user_id: string;
+  @PrimaryColumn({ name: 'user_id', type: 'uuid' })
+  userId: string;
+
+  @CreateDateColumn({ name: 'joined_at', type: 'timestamp' })
+  joinedAt: Date;
+
+  @Column({ name: 'last_read_at', type: 'timestamp', nullable: true })
+  lastReadAt?: Date;
 
   @ManyToOne(() => ConversationEntity, (conversation) => conversation.members, {
     onDelete: 'CASCADE',
@@ -29,10 +35,4 @@ export class ConversationMemberEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
-
-  @CreateDateColumn({ type: 'timestamp' })
-  joined_at: Date;
-
-  @Column({ type: 'timestamp', nullable: true })
-  last_read_at?: Date;
 }

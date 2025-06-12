@@ -7,7 +7,7 @@ import { CommentMediaEntity } from './comment-media.entity';
 
 @Entity('comments')
 export class CommentEntity extends BaseIdEntity {
-  @Column({ type: 'text' })
+  @Column({ name: 'content', type: 'text' })
   content: string;
 
   @ManyToOne(() => PostEntity, (post) => post.comments, { onDelete: 'CASCADE' })

@@ -13,38 +13,38 @@ import { Gender } from 'src/enum/gender.enum';
 
 @Entity('users')
 export class UserEntity extends BaseIdEntity {
-  @Column({ type: 'varchar', length: 50, unique: true, nullable: true })
+  @Column({ name: 'username', type: 'varchar', length: 50, unique: true, nullable: true })
   username: string;
 
-  @Column({ type: 'varchar', length: 100, unique: true })
+  @Column({ name: 'email', type: 'varchar', length: 100, unique: true })
   email: string;
 
-  @Column({ type: 'text' })
+  @Column({ name: 'password', type: 'text' })
   password: string;
 
-  @Column({ type: 'varchar', length: 100 })
-  first_name: string;
+  @Column({ name: 'first_name', type: 'varchar', length: 100 })
+  firstName: string;
 
-  @Column({ type: 'varchar', length: 100 })
-  last_name: string;
+  @Column({ name: 'last_name', type: 'varchar', length: 100 })
+  lastName: string;
 
-  @Column()
+  @Column({ name: 'dob', type: 'date'})
   dob: Date;
 
-  @Column({ type: 'enum', enum: Gender })
+  @Column({ name: 'gender', type: 'enum', enum: Gender })
   gender: Gender;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ name: 'bio', type: 'text', nullable: true })
   bio: string;
 
-  @Column({ type: 'text', nullable: true })
-  avatar_url: string;
+  @Column({ name: 'avatar_url', type: 'text', nullable: true })
+  avatarUrl: string;
 
-  @Column({ default: false })
-  is_verified: boolean;
+  @Column({ name: 'is_verified', default: false })
+  isVerified: boolean;
 
-  @Column({ nullable: true })
-  verified_at: Date;
+  @Column({ name: 'verified_at', type: 'timestamp', nullable: true })
+  verifiedAt: Date;
 
   @OneToMany(() => PostEntity, (post) => post.user)
   posts: PostEntity[];
@@ -53,10 +53,10 @@ export class UserEntity extends BaseIdEntity {
   comments: CommentEntity[];
 
   @OneToMany(() => PostLikeEntity, (like) => like.user)
-  post_likes: PostLikeEntity[];
+  postLikes: PostLikeEntity[];
 
   @OneToMany(() => CommentLikeEntity, (like) => like.user)
-  comment_likes: CommentLikeEntity[];
+  commentLikes: CommentLikeEntity[];
 
   @OneToMany(() => UserFollowerEntity, (uf) => uf.follower)
   following: UserFollowerEntity[];
@@ -71,8 +71,8 @@ export class UserEntity extends BaseIdEntity {
   conversations: ConversationMemberEntity[];
 
   @OneToMany(() => MessageEntity, (message) => message.sender)
-  sent_messages: MessageEntity[];
+  sentMessages: MessageEntity[];
 
   @OneToMany(() => MessageStatusEntity, (status) => status.user)
-  message_statuses: MessageStatusEntity[];
+  messageStatuses: MessageStatusEntity[];
 }

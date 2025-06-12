@@ -4,7 +4,7 @@ import { PostEntity } from './post.entity';
 
 @Entity('tags')
 export class TagEntity extends BaseIdEntity {
-  @Column({ type: 'varchar', length: 50, unique: true })
+  @Column({ name: 'name', type: 'varchar', length: 50, unique: true })
   name: string;
 
   @ManyToMany(() => PostEntity, (post) => post.tags)

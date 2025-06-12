@@ -8,6 +8,15 @@ import { MessageType } from 'src/enum/message-type.enum';
 
 @Entity('messages')
 export class MessageEntity extends BaseIdEntity {
+  @Column({ name: 'content', type: 'text', nullable: true })
+  content?: string;
+
+  @Column({ name: 'message_type', type: 'enum', enum: MessageType, default: MessageType.TEXT })
+  messageType: MessageType;
+
+  @Column({ name: 'is_edited', type: 'boolean', default: false })
+  isEdited: boolean;
+
   @ManyToOne(
     () => ConversationEntity,
     (conversation) => conversation.messages,
@@ -18,20 +27,11 @@ export class MessageEntity extends BaseIdEntity {
   @JoinColumn({ name: 'conversation_id' })
   conversation: ConversationEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.sent_messages, {
+  @ManyToOne(() => UserEntity, (user) => user.sentMessages, {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'sender_id' })
   sender?: UserEntity;
-
-  @Column({ type: 'text', nullable: true })
-  content?: string;
-
-  @Column({ type: 'enum', enum: MessageType, default: MessageType.TEXT })
-  message_type: MessageType;
-
-  @Column({ type: 'boolean', default: false })
-  is_edited: boolean;
 
   @OneToMany(() => MessageStatusEntity, (status) => status.message)
   statuses: MessageStatusEntity[];

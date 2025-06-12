@@ -38,13 +38,14 @@ export class AuthService {
     const expireIn = parseInt(
       process.env.JWT_EXPIRE_IN || Constant.JWT.DEFAULT.EXPIRE_IN,
     );
+    const expireAt = now + expireIn;
 
     const payload = {
       id: user.id,
       sub: user.email,
       iss: process.env.JWT_ISSUER,
       iat: now,
-      exp: now + expireIn,
+      exp: expireAt,
       jti: uuidv4(),
     };
     const token = this.jwtService.signAsync(payload, {
@@ -52,6 +53,6 @@ export class AuthService {
       expiresIn: process.env.JWT_EXPIRE_IN,
     });
 
-    return { token };
+    return { token, expireAt };
   }
 }

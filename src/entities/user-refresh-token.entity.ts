@@ -3,12 +3,12 @@ import { BaseIdEntity } from './base.entity';
 
 @Entity('refresh_tokens')
 export class UserRefreshTokenEntity extends BaseIdEntity {
-  @Column({ unique: true })
-  hashed_token: string;
+  @Column({ name: 'hashed_token', unique: true })
+  hashedToken: string;
 
-  @Column()
-  expired_at: Date;
+  @Column({ name: 'expired_at', type: 'timestamp' })
+  expiredAt: Date;
 
-  @Column()
+  @Column({ name: 'email', type: 'varchar' })
   email: string;
 }

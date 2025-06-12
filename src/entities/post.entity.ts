@@ -16,15 +16,15 @@ import { PostMediaEntity } from './post-media.entity';
 
 @Entity('posts')
 export class PostEntity extends BaseIdEntity {
+  @Column({ name: 'content', type: 'text', nullable: true })
+  content?: string;
+
+  @Column({ name: 'image_url', type: 'text', nullable: true })
+  imageUrl?: string;
+
   @ManyToOne(() => UserEntity, (user) => user.posts, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
-
-  @Column({ type: 'text', nullable: true })
-  content?: string;
-
-  @Column({ type: 'text', nullable: true })
-  image_url?: string;
 
   @OneToMany(() => CommentEntity, (comment) => comment.post)
   comments: CommentEntity[];

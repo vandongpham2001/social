@@ -11,26 +11,27 @@ import { MediaType } from 'src/enum/media-type.enum';
 
 @Entity('post_media')
 export class PostMediaEntity extends BaseIdEntity {
-  @ManyToOne(() => PostEntity, (post) => post.media, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'post_id' })
-  post: PostEntity;
-
-  @Column({ type: 'text' })
-  media_url: string;
+  @Column({ name: 'media_url', type: 'text' })
+  mediaUrl: string;
 
   @Column({
+    name: 'media_type',
     type: 'enum',
     enum: MediaType,
     default: MediaType.IMAGE,
   })
-  media_type: MediaType;
+  mediaType: MediaType;
 
-  @Column({ type: 'text', nullable: true })
-  thumbnail_url?: string;
+  @Column({ name: 'thumbnail_url', type: 'text', nullable: true })
+  thumbnailUrl?: string;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ name: 'duration', type: 'int', nullable: true })
   duration?: number;
 
-  @CreateDateColumn({ type: 'timestamp' })
-  uploaded_at: Date;
+  @CreateDateColumn({ name: 'uploaded_at', type: 'timestamp' })
+  uploadedAt: Date;
+
+  @ManyToOne(() => PostEntity, (post) => post.media, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'post_id' })
+  post: PostEntity;
 }

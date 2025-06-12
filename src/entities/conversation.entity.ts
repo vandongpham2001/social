@@ -5,11 +5,11 @@ import { MessageEntity } from './message.entity';
 
 @Entity('conversations')
 export class ConversationEntity extends BaseIdEntity {
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column({ name: 'name', type: 'varchar', length: 100, nullable: true })
   name?: string;
 
-  @Column({ type: 'boolean', default: false })
-  is_group: boolean;
+  @Column({ name: 'is_group', type: 'boolean', default: false })
+  isGroup: boolean;
 
   @OneToMany(() => ConversationMemberEntity, (member) => member.conversation)
   members: ConversationMemberEntity[];

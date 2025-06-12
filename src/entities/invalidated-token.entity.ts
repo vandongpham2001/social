@@ -3,9 +3,9 @@ import { BaseEntity } from './base.entity';
 
 @Entity('invalidated_tokens')
 export class InvalidatedTokenEntity extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryColumn({ name: 'id', type: 'text' })
   id: string;
 
-  @Column({ type: 'timestamp' })
-  expiry_time: Date;
+  @Column({ name: 'expiry_time', type: 'timestamp' })
+  expiryTime: Date;
 }

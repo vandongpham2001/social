@@ -9,28 +9,28 @@ import {
 
 export abstract class BaseEntity extends TypeORMBaseEntity {
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp', nullable: true })
-  deleted_at?: Date;
+  deletedAt?: Date;
 
   @Column({ name: 'created_by', nullable: true })
-  created_by?: string;
+  createdBy?: string;
 
   @Column({ name: 'updated_by', nullable: true })
-  updated_by?: string;
+  updatedBy?: string;
 
   @Column({ name: 'deleted_by', nullable: true })
-  deleted_by?: string;
+  deletedBy?: string;
 
   @Column({ name: 'is_deleted', default: false })
-  is_deleted: boolean;
+  isDeleted: boolean;
 }
 
 export abstract class BaseIdEntity extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', { name: 'id' })
   id: string;
 }

@@ -11,11 +11,23 @@ import { UserEntity } from './user.entity';
 
 @Entity('user_followers')
 export class UserFollowerEntity extends BaseEntity {
-  @PrimaryColumn('uuid')
-  follower_id: string;
+  @PrimaryColumn({ name: 'follower_id', type: 'uuid' })
+  followerId: string;
 
-  @PrimaryColumn('uuid')
-  following_id: string;
+  @PrimaryColumn({ name: 'following_id', type: 'uuid' })
+  followingId: string;
+
+  @CreateDateColumn({ name: 'followed_at', type: 'timestamp' })
+  followedAt: Date;
+
+  @Column({ name: 'is_muted', type: 'boolean', default: false })
+  isMuted: boolean;
+
+  @Column({ name: 'is_blocked', type: 'boolean', default: false })
+  isBlocked: boolean;
+
+  @Column({ name: 'is_request_pending', type: 'boolean', default: false })
+  isRequestPending: boolean;
 
   @ManyToOne(() => UserEntity, (user) => user.following, {
     onDelete: 'CASCADE',
@@ -28,16 +40,4 @@ export class UserFollowerEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'following_id' })
   following: UserEntity;
-
-  @CreateDateColumn({ type: 'timestamp' })
-  followed_at: Date;
-
-  @Column({ type: 'boolean', default: false })
-  is_muted: boolean;
-
-  @Column({ type: 'boolean', default: false })
-  is_blocked: boolean;
-
-  @Column({ type: 'boolean', default: false })
-  is_request_pending: boolean;
 }

@@ -11,22 +11,23 @@ import { AttachmentFileType } from 'src/enum/attachment-file-type.enum';
 
 @Entity('message_attachments')
 export class MessageAttachmentEntity extends BaseIdEntity {
+  @Column({ name: 'file_url', type: 'text' })
+  fileUrl: string;
+
+  @Column({
+    name: 'file_type',
+    type: 'enum',
+    enum: AttachmentFileType,
+    nullable: true,
+  })
+  fileType?: AttachmentFileType;
+
+  @CreateDateColumn({ name: 'uploaded_at', type: 'timestamp' })
+  uploadedAt: Date;
+
   @ManyToOne(() => MessageEntity, (message) => message.attachments, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'message_id' })
   message: MessageEntity;
-
-  @Column({ type: 'text' })
-  file_url: string;
-
-  @Column({
-    type: 'enum',
-    enum: AttachmentFileType,
-    nullable: true,
-  })
-  file_type?: AttachmentFileType;
-
-  @CreateDateColumn({ type: 'timestamp' })
-  uploaded_at: Date;
 }
